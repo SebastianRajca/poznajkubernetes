@@ -22,3 +22,9 @@ kubectl delete pod NAME
 # utworzenie definicji Pod i zapisanie go w pliku pod.yaml
 kubectl run NAME --image=IMAGE --generator=run-pod/v1  --dry-run -o yaml > pod.yaml
 
+# konsola kontenera 
+kubectl exec -it containerName bash
+
+# przekierowanie portu hostPort:containerPort
+kubectl port-forward web 8080:80
+
