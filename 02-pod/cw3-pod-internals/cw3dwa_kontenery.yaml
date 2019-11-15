@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: helloapp
+spec:
+  containers:
+  - image: poznajkubernetes/helloapp:multi
+    name: helloapp
+  - image: busybox
+    name: busybox
+  restartPolicy: OnFailure
