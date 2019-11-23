@@ -1,0 +1,14 @@
+{
+    "firstName": "Jan",
+    "lastName": "Kowalski",
+    "age": 24,
+    "address": {
+        "streetAddress": "126",
+        "city": "Waszawa",
+        "state": "MAZ",
+        "postalCode": "00-000"
+    },
+    "phoneNumbers": [
+        { "type": "mob", "number": "1321346546" }
+    ]
+}

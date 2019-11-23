@@ -1,0 +1,36 @@
+apiVersion: v1
+data:
+  123_TESTING: Test123Dwa
+  TESTING: TestDwa
+  TESTING-123: Test-123Dwa
+  cw2-json1.json: |-
+    {
+      "fruit": "Apple",
+      "size": "Large",
+      "color": "Red"
+    }
+  plik_json: |-
+    {
+        "firstName": "Jan",
+        "lastName": "Kowalski",
+        "age": 24,
+        "address": {
+            "streetAddress": "126",
+            "city": "Waszawa",
+            "state": "MAZ",
+            "postalCode": "00-000"
+        },
+        "phoneNumbers": [
+            { "type": "mob", "number": "1321346546" }
+        ]
+    }
+  testKey: KluczTestDwa
+  testKey2: Klucz2TestDwa
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2019-11-23T18:51:29Z"
+  name: cm02-mod03-cw2
+  namespace: default
+  resourceVersion: "80191"
+  selfLink: /api/v1/namespaces/default/configmaps/cm02-mod03-cw2
+  uid: 42ac7818-0e22-11ea-860e-00155d0b610d

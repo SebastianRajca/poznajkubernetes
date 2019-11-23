@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkad2
+spec:
+  restartPolicy: Never
+  containers:
+  - name: pkad2
+    image: poznajkubernetes/pkad
+    env:
+    - name: MY_NAME
+      value: "Sebastian"
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    envFrom:
+      - configMapRef:
+          name: cm03-mod03-cw2          
+    resources: {}

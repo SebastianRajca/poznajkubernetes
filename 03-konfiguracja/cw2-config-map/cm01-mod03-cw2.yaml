@@ -1,0 +1,16 @@
+apiVersion: v1
+data:
+  123_TESTING: Test123
+  TESTING: Test
+  TESTING-123: Test-123
+  testKey: KluczTest
+  testKey2: Klucz2Test
+  MY_NAME: ImieConfigMap  
+kind: ConfigMap
+metadata:
+  creationTimestamp: "2019-11-23T18:18:34Z"
+  name: cm01-mod03-cw2
+  namespace: default
+  resourceVersion: "77791"
+  selfLink: /api/v1/namespaces/default/configmaps/cm01-mod03-cw2
+  uid: a976677b-0e1d-11ea-860e-00155d0b610d

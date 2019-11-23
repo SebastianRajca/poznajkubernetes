@@ -63,3 +63,26 @@ kubectl port-forward nazwa_poda PORT_LOKALNY:PORT_W_POD
 
 # uruchom proxy do api
 kubectl proxy
+
+# 
+# można stosować cm, configmap i configmaps 
+# 
+
+
+# pobranie ConfigMap w domyślnej przestrzeni nazw
+kubectl get cm
+
+# opis ConfigMapy z informacją o zawartości
+kubectl describe cm
+
+# usunięcie ConfigMapy
+kubectl delete cm
+
+# stworzenie ConfigMapy
+kubectl create cm NAME --from-literal=key=value --from-file=file.ext
+
+# przekierowanie portów lokalnych na te z kontenera
+kubectl port-forward
+
+# uruchomienie polecenia w kontenerze na Pod
+kubectl exec POD -- printenv
