@@ -1,34 +1,3 @@
-
-### Na podstawie demo i materiałów z poprzedniej lekcji wykorzystaj Vault do przekazania konfiguracji.
-W swoim Pod wygeneruj plik konfiguracyjny typu json lub xml ze secretami z Vault.
-
-instalacja vaulta:
-
-```
-$ k apply -f vault.yaml
-pod/vault created
-```
-```
-$ kubectl logs vault | grep Token
-Root Token: s.TTe9VRbxlFGeomWcq65zKSCQ
-```
-```
-$ export VAULT_TOKEN=s.TTe9VRbxlFGeomWcq65zKSCQ
-```
-```
-$ export VAULT_ADDR=http://127.0.0.1:8200
-```
-
-```
-$ k port-forward vault 8200 &
-
-$ Forwarding from 127.0.0.1:8200 -> 8200
-Forwarding from [::1]:8200 -> 8200
-```
-
-Konfiguracja:
-
-```bash
 #!/bin/bash
 
 # Create the 'vault-auth' service account
@@ -62,12 +31,3 @@ vault write auth/kubernetes/config token_reviewer_jwt="$SA_JWT_TOKEN" kubernetes
 #  Vault policies and default token TTL
 
 vault write auth/kubernetes/role/example bound_service_account_names=demo-pod bound_service_account_namespaces=default policies=myapp-kv-ro ttl=24h
-```
-
-```
-$ kubectl create configmap example-vault-agent-config --from-file=./configs-k8s/
-configmap/example-vault-agent-config created
-```
-```
-kubectl apply -f example-k8s-spec.yaml
-```
