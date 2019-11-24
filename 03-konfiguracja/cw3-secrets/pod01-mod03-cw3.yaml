@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: crpkad
+spec:
+  restartPolicy: Never
+  containers:
+  - name: crpkad
+    image: crsebastian.azurecr.io/pkad-private:blue
+    env:
+    - name: MY_NAME
+      value: "Sebastian"
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    resources: {}
+    ports:
+      - containerPort: 8080
+  imagePullSecrets:
+    - name: crcreg

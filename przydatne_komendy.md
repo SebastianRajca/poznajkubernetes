@@ -86,3 +86,22 @@ kubectl port-forward
 
 # uruchomienie polecenia w kontenerze na Pod
 kubectl exec POD -- printenv
+
+#
+# SECRESTS
+#
+
+# utworzenie secter z lini poleceń
+kubectl create secret generic secret-literal --from-literal=user=poznaj --from-literal=pass=kubernetets
+
+# utworzenie secret z pliku
+kubectl create secret generic secret-file --from-file=secrets.txt
+
+# pobranie secret
+kubectl get secrets secret-literal -o yaml
+
+# decode base 64
+echo cG96bmFq | base64 -d
+
+# utworzenie secret do z docker config
+kubectl create secret generic crcreg --from-file=.dockerconfigjson=/home/user/.docker/config.json --type=kubernetes.io/dockerconfigjson

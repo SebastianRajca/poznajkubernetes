@@ -250,6 +250,141 @@ W przypadku duplikatów zostaną nadpisane zmienne o takich samych kluczach.
 # Wolumeny
 - Wykorzystując drugą ConfigMapę stwórz Pod i wczytaj wszystkie pliki do katalogu wybranego przez siebie katalogu
 
+definicja poda:
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkad3
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: volume-cm02
+      configMap:
+          name: cm02-mod03-cw2
+  containers:
+  - name: pkad3
+    image: poznajkubernetes/pkad
+    volumeMounts:
+      - name: volume-cm02
+        mountPath: /etc/jsons
+    env:
+    - name: MY_NAME
+      value: "Sebastian"
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8080
+```
+```
+$ k apply -f pod03-mod03-cw2.yaml
 
+pod/pkad3 created
+```
+
+```
+$ k exec pkad3 -- ls /etc/jsons
+123_TESTING
+TESTING
+TESTING-123
+cw2-json1.json
+plik_json
+testKey
+testKey2
+```
+```
+$ k exec pkad3 -- cat /etc/jsons/cw2-json1.json
+{
+  "fruit": "Apple",
+  "size": "Large",
+  "color": "Red"
+}
+```
 
 - Wczytaj do wolumenu tylko i wyłącznie pliki powyżej 30KB z trzeciej ConfigMapy
+
+definicja poda:
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkad4
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: volume-cm02
+      configMap:
+          name: cm02-mod03-cw2
+    - name: volume-cm03
+      configMap:
+          name: cm03-mod03-cw2
+          items:
+            - key: file_40k
+              path: file.40k
+            - key: file_50k
+              path: file.50k
+  containers:
+  - name: pkad4
+    image: poznajkubernetes/pkad
+    volumeMounts:
+      - name: volume-cm02
+        mountPath: /etc/json-s
+      - name: volume-cm03
+        mountPath: /etc/txt-s        
+    env:
+    - name: MY_NAME
+      value: "Sebastian"
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8080
+```
+```
+$ k apply -f pod04-mod03-cw2.yaml 
+pod/pkad4 created
+```
+
+```
+$ k exec pkad4 -- ls /etc/txt-s
+file.40k
+file.50k
+```
+
+### Odpowiedz sobie na pytania:
+
+- Co się stanie jak z mountPath ustawisz na katalog Twojej aplikacji?
+  
+
+- Co się stanie jak plik stworzony przez ConfigMap zostanie usunięty? Czy taki plik zostanie usunięty? 
+
+Read-only file
+
+```
+$ k exec pkad4 -- rm /etc/txt-s/file.40k
+rm: can't remove '/etc/txt-s/file.40k': Read-only file system
+command terminated with exit code 1
+```
+- Co spowoduje aktualizacja ConfigMapy?
+
+Zaktualizuje plik

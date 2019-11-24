@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: pkad4
+spec:
+  restartPolicy: Never
+  volumes:
+    - name: volume-cm02
+      configMap:
+          name: cm02-mod03-cw2
+    - name: volume-cm03
+      configMap:
+          name: cm03-mod03-cw2
+          items:
+            - key: file_40k
+              path: file.40k
+            - key: file_50k
+              path: file.50k
+  containers:
+  - name: pkad4
+    image: poznajkubernetes/pkad
+    volumeMounts:
+      - name: volume-cm02
+        mountPath: /etc/json-s
+      - name: volume-cm03
+        mountPath: /etc/txt-s        
+    env:
+    - name: MY_NAME
+      value: "Sebastian"
+    - name: POD_NAME
+      valueFrom:
+        fieldRef:
+          fieldPath: metadata.name
+    - name: POD_IP
+      valueFrom:
+        fieldRef:
+          fieldPath: status.podIP
+    resources:
+      limits:
+        memory: "128Mi"
+        cpu: "500m"
+    ports:
+      - containerPort: 8080
