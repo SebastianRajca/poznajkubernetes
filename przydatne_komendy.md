@@ -1,3 +1,7 @@
+#
+# POD
+#
+
 # utworzenie pod z pliku
 kubectl create -f pod.yaml
 
@@ -65,7 +69,7 @@ kubectl port-forward nazwa_poda PORT_LOKALNY:PORT_W_POD
 kubectl proxy
 
 # 
-# można stosować cm, configmap i configmaps 
+# CONFIGMAP
 # 
 
 
@@ -105,3 +109,58 @@ echo cG96bmFq | base64 -d
 
 # utworzenie secret do z docker config
 kubectl create secret generic crcreg --from-file=.dockerconfigjson=/home/user/.docker/config.json --type=kubernetes.io/dockerconfigjson
+
+#
+# GRUPOWANIE - WYBIERANIE
+#
+
+# dodaj nową etytkietę
+kubectl label pods NAME labelName=labelValue
+
+# dodaj nową etykietę do wszystkich Podów
+kubectl label pods --all labelName=labelValue
+
+# zaktualizuj etykietę
+kubectl label pods NAME --overwrite labelName=newValue
+
+# usuń etykietę
+kubectl label pods NAME labelName-
+
+# pokaż wszystkie etykiety zdefiniowane w zasobie
+kubectl get RESOURCE --show-labels
+
+# pokaż etykietę labelName jako nową kolumnę w liście Podów
+# zamiast -L można stosować --label-columns
+kubectl get pods -L labelName
+
+# pokaż tylko i wyłącznie Pody które mają etykietę env
+# zamiast --selector można stosowoać -l (małe l)
+kubectl get pods --selector env
+
+# pokaż tylko i wyłącznie Pody które nie mają etykiety env
+kubectl get pods --selector '!env'
+
+# pokaż Pody które mają env=test i app=ui
+kubectl get pods -l env=test,app=ui
+
+# pokaż Pody które mają env z przedziału test i stg
+kubectl get pods -l 'env in (test, stg)'
+
+# pokaż Pody które nie mają env z przedziału test i stg
+kubectl get pods -l 'env notin (test, stg)'
+
+# pokaż jedynie Pody które nie są wstanie Running
+kubectl get pods --field-selector status.phase!=Running
+
+# posrotuj Pody po fazie
+kubectl get pods --sort-by=.status.phase
+
+# posrotuj Pody dacie utworzenia
+kubectl get pods --sort-by=.metadata.creationTimestamp
+
+# wyświetl jedynie nazwę poda
+kubectl get pods -o jsonpath='{.items[*].metadata.name}'
+
+# wyświetl nazwę poda w nowej linicje
+# uwaga na windows zamiast jsonpath='' to jsonpath="" wiec "\n" to \"\n\"
+kubectl get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
