@@ -13,7 +13,7 @@
 ```
 "release" : "stable", "release" : "canary"
 "env" : "dev", "env" : "test", "env" : "production"
-"tier" : "frontend", "tier" : "backend", "purpose" : "cache"
+"tier" : "frontend", "tier" : "backend", "tier" : "cache"
 "app" : "nginx", "app" : "redis" ... 
 "version" : "1.0" ...
 ```
