@@ -164,3 +164,23 @@ kubectl get pods -o jsonpath='{.items[*].metadata.name}'
 # wyświetl nazwę poda w nowej linicje
 # uwaga na windows zamiast jsonpath='' to jsonpath="" wiec "\n" to \"\n\"
 kubectl get pods -o jsonpath='{range .items[*]}{.metadata.name}{"\n"}{end}'
+
+#
+#   Serwisy i Service Discovery
+#
+
+# Pod do sprawdzania nslookup
+kubectl run -it --rm tools --generator=run-pod/v1 --image=giantswarm/tiny-tools
+
+# pobierz wszystkie Services
+kubectl get svc
+kubectl get services
+ 
+# opis services
+kubectl describe svc
+ 
+# pobierz wszystkie Endpointy
+kubectl get endpoints
+ 
+# Pod do sprawdzania nslookup
+kubectl run -it --rm tools --generator=run-pod/v1 --image=giantswarm/tiny-tools
