@@ -184,3 +184,9 @@ kubectl get endpoints
  
 # Pod do sprawdzania nslookup
 kubectl run -it --rm tools --generator=run-pod/v1 --image=giantswarm/tiny-tools
+
+# Utworzenie namespaces
+kubectl create ns <nazwa namespaces>
+
+# pobierz wszystkie Services z namespaces
+kubectl get svc -n <nazwa namespaces>
